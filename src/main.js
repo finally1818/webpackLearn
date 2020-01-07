@@ -1,8 +1,6 @@
-import './asset/index.less'
-import './asset/index.css'
-import './asset/reset.less'
-import './asset/reset.css'
-import './asset/img_demo.jpg'
-import './asset/mp3_demo.mp3'
+import Vue from 'vue'
+import App from './app'
 
-console.log('object')
+new Vue({
+  render: (h) => h(App)
+}).$mount('#app')
