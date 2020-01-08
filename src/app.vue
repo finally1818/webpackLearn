@@ -17,7 +17,7 @@ import "./asset/reset.css";
 export default {
   data() {
     return {
-      initData: "Vue开发环境运行成功了"
+      initData: "Vue开发环境运行成功了！！"
     };
   },
   methods: {
