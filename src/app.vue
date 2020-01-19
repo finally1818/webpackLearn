@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="container">
-      <h1>{{initData}}</h1>
+      <h1>{{ initData }}</h1>
     </div>
     <button v-on:click="reverseMessage">反转</button>
     <button v-on:click="handleDel">删减</button>
@@ -13,12 +13,16 @@ import "./asset/index.less";
 import "./asset/reset.less";
 import "./asset/index.css";
 import "./asset/reset.css";
+const os = require("os");
 
 export default {
   data() {
     return {
       initData: "Vue开发环境运行成功了！！"
     };
+  },
+  created() {
+    console.log(os);
   },
   methods: {
     reverseMessage() {

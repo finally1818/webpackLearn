@@ -1,10 +1,15 @@
 // webpack.config.js
 
 const path = require('path')
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const vueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HappyPack = require('happypack')
+const os = require('os')
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 // const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 // const Webpack = require('webpack')
 const devMode = process.argv.indexOf('--mode=production') === -1
@@ -40,10 +45,10 @@ module.exports = {
       {
         test: /\.js$/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          },
+          loader: 'happypack/loader?id=happyBabel',
+          // options: {
+          //   presets: ['@babel/preset-env'],
+          // },
         },
         exclude: /node_modules/,
       },
@@ -158,6 +163,25 @@ module.exports = {
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
     new vueLoaderPlugin(),
+    new HappyPack({
+      id: 'happyBabel', // 与loader对应的id
+      // 用法和loader的配置一样，注意这里是loaders
+      loaders: [
+        {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env']],
+          },
+          cacheDirectory: true,
+        },
+      ],
+      threadPool: happyThreadPool,
+    }),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./vendor-manifest.json'),
+    }),
+    new CopyWebpackPlugin([{ from: 'static', to: 'static' }]),
     // new Webpack.HotModuleReplacementPlugin(),
     // indexLess,
     // indexCss

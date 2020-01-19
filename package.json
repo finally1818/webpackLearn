@@ -12,8 +12,10 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.1",
+    "element-ui": "^2.13.0",
     "extract-text-webpack-plugin": "v4.0.0-alpha.0",
     "file-loader": "^5.0.2",
+    "happypack": "^5.0.1",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
@@ -33,7 +35,8 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --config build/webpack.config.js --open",
-    "build": "webpack --config build/webpack.config.js"
+    "build": "webpack --config build/webpack.config.js",
+    "dll": "webpack --config build/webpack.dll.config.js"
   },
   "dependencies": {
     "vue": "^2.6.11"
