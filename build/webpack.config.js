@@ -10,6 +10,7 @@ const HappyPack = require('happypack')
 const os = require('os')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 // const Webpack = require('webpack')
 const devMode = process.argv.indexOf('--mode=production') === -1
@@ -182,6 +183,10 @@ module.exports = {
       manifest: require('./vendor-manifest.json'),
     }),
     new CopyWebpackPlugin([{ from: 'static', to: 'static' }]),
+    new BundleAnalyzerPlugin({
+      analyzerHost: '127.0.0.1',
+      analyzerPort: 8889,
+    }),
     // new Webpack.HotModuleReplacementPlugin(),
     // indexLess,
     // indexCss
